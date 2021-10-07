@@ -15,7 +15,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ciphertext = "".join(map(str, new_word))
     return ciphertext
 
-plaintext = input("Введите ваше великолепное слово: ")
+plaintext = input("Введите Ваше великолепное слово: ")
 print(encrypt_caesar(plaintext))
 
 
@@ -34,13 +34,5 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     plaintext = "".join(map(str, new_word))
     return plaintext
 
-ciphertext = input("Введите ваше великолепное слово: ")
+ciphertext = input("Введите Ваше великолепное зашифрованное слово: ")
 print(decrypt_caesar(ciphertext))
-
-
-def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
-    """
-    Brute force breaking a Caesar cipher.
-    """
-    best_shift = 0
-    return best_shift
