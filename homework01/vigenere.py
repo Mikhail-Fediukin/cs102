@@ -21,7 +21,8 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
                 bill.append(chr(p + n - 26))
             else:
                 bill.append(chr(p + n))
-    return "".join(bill)
+    ciphertext = "".join(bill)
+    return ciphertext
 
 
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
@@ -47,7 +48,8 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
                 bil.append(chr(p - n + 26))
             else:
                 bil.append(chr(p - n))
-    return "".join(bil)
+    plaintext = "".join(bill)
+    return plaintext
 
 plains = []; codes = []; bill = []; a = []; codez = []; plainz = []; bil = []
 
