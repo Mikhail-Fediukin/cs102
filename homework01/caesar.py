@@ -13,16 +13,22 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
+    # (90 < chr(ord(str(i))) + shift < 97) or (
     ciphertext: list = []
     new_word = []
     for i in plaintext:
         if i.isalpha() == True:
-            if i == "X" or i == "Y" or i == "Z" or i == "x" or i == "y" or i == "z":
-                l = chr(ord(str(i)) - 23)
-                new_word.append(l)
-            else:
-                l = chr(ord(str(i)) + shift)
-                new_word.append(l)
+            b = ord(i) + shift
+            if 65 <= ord(i) <= 90:
+                if b > 90:
+                    new_word.append(chr((b - 90) % 26 + ord("A") - 1))
+                else:
+                    new_word.append(chr(ord(i) + shift))
+            if 97 <= ord(i) <= 122:
+                if b > 122:
+                    new_word.append(chr((b - 122) % 26 + ord("a") - 1))
+                else:
+                    new_word.append(chr(ord(i) + shift))
         else:
             new_word.append(i)
     return "".join(map(str, new_word))
@@ -44,12 +50,17 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     new_word = []
     for i in ciphertext:
         if i.isalpha() == True:
-            if i == "A" or i == "B" or i == "C" or i == "a" or i == "b" or i == "c":
-                l = chr(ord(str(i)) + 23)
-                new_word.append(l)
-            else:
-                l = chr(ord(str(i)) - shift)
-                new_word.append(l)
+            b = ord(i) - shift
+            if 65 <= ord(i) <= 90:
+                if b < 65:
+                    new_word.append(chr(ord("Z") + 1 - (65 - b) % 26))
+                else:
+                    new_word.append(chr(ord(i) - shift))
+            if 97 <= ord(i) <= 122:
+                if b < 97:
+                    new_word.append(chr(ord("z") + 1 - (97 - b) % 26))
+                else:
+                    new_word.append(chr(ord(i) - shift))
         else:
             new_word.append(i)
     return "".join(map(str, new_word))

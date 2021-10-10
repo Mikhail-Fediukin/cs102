@@ -6,3 +6,4 @@ pytest==6.0.1
 
 rsa~=4.7.2
 setuptools~=57.4.0
+caesar~=0.1.3

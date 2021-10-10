@@ -32,12 +32,14 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    while a % b != 0:
-        c = int(a % b)
-        a = b
-        b = c
-    return b
-
+    if a == 0 or b == 0:
+        return 0
+    else:
+        while a % b != 0:
+            c = int(a % b)
+            a = b
+            b = c
+        return b
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     """
@@ -48,11 +50,11 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     """
     x = [0]
     y = [1]
-    ee = e
+    ee = phi
     a = []
-    while phi != 0:
-        a.append(e // phi)
-        e, phi = phi, e % phi
+    while e != 0:
+        a.append(phi // e)
+        phi, e = e, phi % e
     a.reverse()
     a.remove(a[0])
     l = len(a)

@@ -28,16 +28,20 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     for i in range(len(plains)):
         n = int(new_codes[i])
         p = int(plains[i])
-        if not p <= 90:
-            if p + n > 122:
-                bill.append(chr(p + n - 26))
-            else:
-                bill.append(chr(p + n))
+        if p < 65 or 90 < p < 97 or p > 122:
+            bill.append(chr(plains[i]))
+            new_codes.insert(0, i + 1)
         else:
-            if p + n > 90:
-                bill.append(chr(p + n - 26))
+            if not p <= 90:
+                if p + n > 122:
+                    bill.append(chr(p + n - 26))
+                else:
+                    bill.append(chr(p + n))
             else:
-                bill.append(chr(p + n))
+                if p + n > 90:
+                    bill.append(chr(p + n - 26))
+                else:
+                    bill.append(chr(p + n))
     return "".join(bill)
 
 
@@ -51,7 +55,6 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
-    plaintext = ""
     a: list = []
     codez: list = []
     plainz: list = []
@@ -71,14 +74,18 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     for i in range(len(plainz)):
         n = int(new_codez[i])
         p = int(plainz[i])
-        if not p <= 90:
-            if p - n < 97:
-                bil.append(chr(p - n + 26))
-            else:
-                bil.append(chr(p - n))
+        if p < 65 or 90 < p < 97 or p > 122:
+            bil.append(chr(plainz[i]))
+            new_codez.insert(0, i + 1)
         else:
-            if p - n < 65:
-                bil.append(chr(p - n + 26))
+            if not p <= 90:
+                if p - n < 97:
+                    bil.append(chr(p - n + 26))
+                else:
+                    bil.append(chr(p - n))
             else:
-                bil.append(chr(p - n))
+                if p - n < 65:
+                    bil.append(chr(p - n + 26))
+                else:
+                    bil.append(chr(p - n))
     return "".join(bil)
