@@ -4,6 +4,7 @@ import typing as tp
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     """
     Encrypts plaintext using a Caesar cipher.
+
     >>> encrypt_caesar("PYTHON")
     'SBWKRQ'
     >>> encrypt_caesar("python")
@@ -13,7 +14,6 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
-    # (90 < chr(ord(str(i))) + shift < 97) or (
     ciphertext: list = []
     new_word = []
     for i in plaintext:
@@ -37,6 +37,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     """
     Decrypts a ciphertext using a Caesar cipher.
+
     >>> decrypt_caesar("SBWKRQ")
     'PYTHON'
     >>> decrypt_caesar("sbwkrq")

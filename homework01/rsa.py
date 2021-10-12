@@ -5,6 +5,7 @@ import typing as tp
 def is_prime(n: int) -> bool:
     """
     Tests to see if a number is prime.
+
     >>> is_prime(2)
     True
     >>> is_prime(11)
@@ -12,6 +13,7 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
+    # PUT YOUR CODE HERE
     i = 2
     if n == 2:
         return True
@@ -27,13 +29,19 @@ def is_prime(n: int) -> bool:
 def gcd(a: int, b: int) -> int:
     """
     Euclid's algorithm for determining the greatest common divisor.
+
     >>> gcd(12, 15)
     3
     >>> gcd(3, 7)
     1
     """
-    if a == 0 or b == 0:
+    # PUT YOUR CODE HERE
+    if a == 0 and b == 0:
         return 0
+    elif a == 0 and b != 0:
+        return b
+    elif b == 0 and a != 0:
+        return a
     else:
         while a % b != 0:
             c = int(a % b)
@@ -46,9 +54,11 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     """
     Euclid's extended algorithm for finding the multiplicative
     inverse of two numbers.
+
     >>> multiplicative_inverse(7, 40)
     23
     """
+    # PUT YOUR CODE HERE
     x = [0]
     y = [1]
     ee = phi

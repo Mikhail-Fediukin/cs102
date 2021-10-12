@@ -1,6 +1,7 @@
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     Encrypts plaintext using a Vigenere cipher.
+
     >>> encrypt_vigenere("PYTHON", "A")
     'PYTHON'
     >>> encrypt_vigenere("python", "a")
@@ -9,45 +10,39 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext: list = []
-    plains: list = []
-    codes: list = []
-    bill: list = []
-    a: list = []
-    for w in range(len(keyword)):
-        if keyword[w].islower() == True:
-            codes.append(ord(str(keyword[w])) - 97)
-        else:
-            codes.append(ord(str(keyword[w])) - 65)
-    plaintext.split()
     for i in range(len(plaintext)):
-        plains.append(ord(plaintext[i]))
-    if len(codes) < len(plains):
-        for k in range(len(codes), len(plains)):
-            a.append(codes[k % len(codes)])
-    new_codes = codes + a
-    for i in range(len(plains)):
-        n = int(new_codes[i])
-        p = int(plains[i])
-        if p < 65 or 90 < p < 97 or p > 122:
-            bill.append(chr(plains[i]))
-            new_codes.insert(0, i + 1)
-        else:
-            if not p <= 90:
-                if p + n > 122:
-                    bill.append(chr(p + n - 26))
-                else:
-                    bill.append(chr(p + n))
+        if i > len(keyword) - 1:
+            if 65 <= ord(keyword[i % len(keyword)]) <= 90:
+                shift = ord(keyword[i % len(keyword)]) - ord("A")
             else:
-                if p + n > 90:
-                    bill.append(chr(p + n - 26))
-                else:
-                    bill.append(chr(p + n))
-    return "".join(bill)
+                shift = ord(keyword[i % len(keyword)]) - ord("a")
+        else:
+            if 65 <= ord(keyword[i]) <= 90:
+                shift = ord(keyword[i]) - ord("A")
+            else:
+                shift = ord(keyword[i]) - ord("a")
+
+        if 65 <= ord(plaintext[i]) <= 90:
+            sum = ord(plaintext[i]) + shift
+            if sum > 90:
+                ciphertext.append(chr(sum - 26))
+            else:
+                ciphertext.append(chr(sum))
+        elif 97 <= ord(plaintext[i]) <= 122:
+            sum = ord(plaintext[i]) + shift
+            if sum > 122:
+                ciphertext.append(chr(sum - 26))
+            else:
+                ciphertext.append(chr(sum))
+        else:
+            ciphertext.append(plaintext[i])
+    return "".join(ciphertext)
 
 
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     """
     Decrypts a ciphertext using a Vigenere cipher.
+
     >>> decrypt_vigenere("PYTHON", "A")
     'PYTHON'
     >>> decrypt_vigenere("python", "a")
@@ -55,37 +50,34 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
-    a: list = []
-    codez: list = []
-    plainz: list = []
-    bil: list = []
-    for w in range(len(keyword)):
-        if keyword[w].islower() == True:
-            codez.append(ord(str(keyword[w])) - 97)
-        else:
-            codez.append(ord(str(keyword[w])) - 65)
-    ciphertext.split()
+    plaintext: list = []
     for i in range(len(ciphertext)):
-        plainz.append(ord(ciphertext[i]))
-    if len(codez) < len(plainz):
-        for k in range(len(codez), len(plainz)):
-            a.append(codez[k % len(codez)])
-    new_codez = codez + a
-    for i in range(len(plainz)):
-        n = int(new_codez[i])
-        p = int(plainz[i])
-        if p < 65 or 90 < p < 97 or p > 122:
-            bil.append(chr(plainz[i]))
-            new_codez.insert(0, i + 1)
-        else:
-            if not p <= 90:
-                if p - n < 97:
-                    bil.append(chr(p - n + 26))
-                else:
-                    bil.append(chr(p - n))
+        if i > len(keyword) - 1:
+            if 65 <= ord(keyword[i % len(keyword)]) <= 90:
+                shift = ord(keyword[i % len(keyword)]) - ord("A")
             else:
-                if p - n < 65:
-                    bil.append(chr(p - n + 26))
-                else:
-                    bil.append(chr(p - n))
-    return "".join(bil)
+                shift = ord(keyword[i % len(keyword)]) - ord("a")
+        else:
+            if 65 <= ord(keyword[i]) <= 90:
+                shift = ord(keyword[i]) - ord("A")
+            else:
+                shift = ord(keyword[i]) - ord("a")
+
+        if 65 <= ord(ciphertext[i]) <= 90:
+            sum = ord(ciphertext[i]) - shift
+            if sum < 65:
+                plaintext.append(chr(sum + 26))
+            else:
+                plaintext.append(chr(sum))
+        elif 97 <= ord(ciphertext[i]) <= 122:
+            sum = ord(ciphertext[i]) - shift
+            if sum < 97:
+                plaintext.append(chr(sum + 26))
+            else:
+                plaintext.append(chr(sum))
+        else:
+            plaintext.append(ciphertext[i])
+    return "".join(plaintext)
+print(encrypt_vigenere("ATTACKATDAWN", "LEMON"))
+print(decrypt_vigenere("LXFOPVEFRNHR", "LEMON"))
+
