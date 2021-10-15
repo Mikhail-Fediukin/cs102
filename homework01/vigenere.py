@@ -78,4 +78,3 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         else:
             plaintext.append(ciphertext[i])
     return "".join(plaintext)
-
