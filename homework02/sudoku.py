@@ -139,10 +139,11 @@ def solve(grid: tp.List[tp.List[str]]):
         return True
     else:
         for e in find_possible_values(grid, find_empty_positions(grid)):
+            k = grid[pos[0]][pos[1]]
             grid[pos[0]][pos[1]] = e
             if solve(grid):
                 return grid
-            grid[pos[0]][pos[1]] = "."
+            grid[pos[0]][pos[1]] = k
         return False
 
 
