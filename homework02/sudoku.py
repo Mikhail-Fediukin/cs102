@@ -89,7 +89,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     ]
 
 
-def find_empty_positions(grid: tp.List[tp.List[str]]):
+def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
     """Найти первую свободную позицию в пазле
 
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
@@ -102,10 +102,11 @@ def find_empty_positions(grid: tp.List[tp.List[str]]):
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             if not grid[i][j].isdigit():
-                return (i, j)
+                return i, j
+    return None
 
 
-def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
+def find_possible_values(grid: tp.List[tp.List[str]], pos) -> tp.Set[str]:
     """Вернуть множество возможных значения для указанной позиции
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -121,7 +122,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return d.difference(set(map(str, set(a).difference("."))))
 
 
-def solve(grid: tp.List[tp.List[str]]):
+def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     """Решение пазла, заданного в grid"""
     """ Как решать Судоку?
         1. Найти свободную позицию
@@ -136,14 +137,14 @@ def solve(grid: tp.List[tp.List[str]]):
     """
     pos = find_empty_positions(grid)
     if pos is None:
-        return True
-    else:
-        for e in find_possible_values(grid, find_empty_positions(grid)):
-            grid[pos[0]][pos[1]] = e
-            if solve(grid):
-                return grid
-            grid[pos[0]][pos[1]] = ""
-        return False
+        return grid
+    for e in find_possible_values(grid, find_empty_positions(grid)):
+        k = grid[pos[0]][pos[1]]
+        grid[pos[0]][pos[1]] = e
+        if solve(grid):
+            return grid
+        grid[pos[0]][pos[1]] = k
+    return None
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
