@@ -17,13 +17,10 @@ def is_prime(n: int) -> bool:
     i = 2
     if n == 2:
         return True
-    else:
-        while n % i != 0 and i <= n:
-            i += 1
-            return True
-            break
-        else:
-            return False
+    while n % i != 0 and i <= n:
+        i += 1
+        return True
+    return False
 
 
 def gcd(a: int, b: int) -> int:
@@ -45,8 +42,7 @@ def gcd(a: int, b: int) -> int:
     else:
         while a % b != 0:
             c = int(a % b)
-            a = b
-            b = c
+            a, b = b, c
         return b
 
 
@@ -59,20 +55,18 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     23
     """
     # PUT YOUR CODE HERE
-    x = [0]
-    y = [1]
-    ee = phi
+    x, y = [0], [1]
+    ee = phi  # сохраняю первоначальное значение phi, т.к. оно в дальнейшем будет меняться
     a = []
     while e != 0:
         a.append(phi // e)
         phi, e = e, phi % e
     a.reverse()
     a.remove(a[0])
-    l = len(a)
-    for i in range(0, l):
+    for i in range(len(a)):
         x.append(y[i])
         y.append(x[i] - y[i] * a[i])
-    return y[i + 1] % ee
+    return y[len(a)] % ee
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
@@ -101,7 +95,7 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
 
     # Return public and private keypair
     # Public key is (e, n) and private key is (d, n)
-    return ((e, n), (d, n))
+    return (e, n), (d, n)
 
 
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:

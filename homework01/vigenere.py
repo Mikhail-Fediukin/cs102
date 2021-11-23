@@ -9,34 +9,34 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
     'LXFOPVEFRNHR'
     """
-    ciphertext: list = []
-    for i in range(len(plaintext)):
+    ciphertext = ""
+    for i, j in enumerate(plaintext):
         if i > len(keyword) - 1:
-            if 65 <= ord(keyword[i % len(keyword)]) <= 90:
+            if ord("A") <= ord(keyword[i % len(keyword)]) <= ord("Z"):
                 shift = ord(keyword[i % len(keyword)]) - ord("A")
             else:
                 shift = ord(keyword[i % len(keyword)]) - ord("a")
         else:
-            if 65 <= ord(keyword[i]) <= 90:
+            if ord("A") <= ord(keyword[i]) <= ord("Z"):
                 shift = ord(keyword[i]) - ord("A")
             else:
                 shift = ord(keyword[i]) - ord("a")
 
-        if 65 <= ord(plaintext[i]) <= 90:
-            sum = ord(plaintext[i]) + shift
-            if sum > 90:
-                ciphertext.append(chr(sum - 26))
+        if ord("A") <= ord(j) <= ord("Z"):
+            sum = ord(j) + shift
+            if sum > ord("Z"):
+                ciphertext += chr(sum - 26)
             else:
-                ciphertext.append(chr(sum))
-        elif 97 <= ord(plaintext[i]) <= 122:
-            sum = ord(plaintext[i]) + shift
-            if sum > 122:
-                ciphertext.append(chr(sum - 26))
+                ciphertext += chr(sum)
+        elif ord("a") <= ord(j) <= ord("z"):
+            sum = ord(j) + shift
+            if sum > ord("z"):
+                ciphertext += chr(sum - 26)
             else:
-                ciphertext.append(chr(sum))
+                ciphertext += chr(sum)
         else:
-            ciphertext.append(plaintext[i])
-    return "".join(ciphertext)
+            ciphertext += j
+    return ciphertext
 
 
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
@@ -50,31 +50,31 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
-    plaintext: list = []
-    for i in range(len(ciphertext)):
+    plaintext = ""
+    for i, j in enumerate(ciphertext):
         if i > len(keyword) - 1:
-            if 65 <= ord(keyword[i % len(keyword)]) <= 90:
+            if ord("A") <= ord(keyword[i % len(keyword)]) <= ord("Z"):
                 shift = ord(keyword[i % len(keyword)]) - ord("A")
             else:
                 shift = ord(keyword[i % len(keyword)]) - ord("a")
         else:
-            if 65 <= ord(keyword[i]) <= 90:
+            if ord("A") <= ord(keyword[i]) <= ord("Z"):
                 shift = ord(keyword[i]) - ord("A")
             else:
                 shift = ord(keyword[i]) - ord("a")
 
-        if 65 <= ord(ciphertext[i]) <= 90:
-            sum = ord(ciphertext[i]) - shift
-            if sum < 65:
-                plaintext.append(chr(sum + 26))
+        if ord("A") <= ord(j) <= ord("Z"):
+            sum = ord(j) - shift
+            if sum < ord("A"):
+                plaintext += chr(sum + 26)
             else:
-                plaintext.append(chr(sum))
-        elif 97 <= ord(ciphertext[i]) <= 122:
-            sum = ord(ciphertext[i]) - shift
-            if sum < 97:
-                plaintext.append(chr(sum + 26))
+                plaintext += chr(sum)
+        elif ord("a") <= ord(j) <= ord("z"):
+            sum = ord(j) - shift
+            if sum < ord("a"):
+                plaintext += chr(sum + 26)
             else:
-                plaintext.append(chr(sum))
+                plaintext += chr(sum)
         else:
-            plaintext.append(ciphertext[i])
-    return "".join(plaintext)
+            plaintext += j
+    return plaintext

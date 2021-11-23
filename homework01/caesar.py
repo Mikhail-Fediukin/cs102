@@ -14,24 +14,26 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     >>> encrypt_caesar("")
     ''
     """
-    ciphertext: list = []
-    new_word = []
+
+    ciphertext = ""
     for i in plaintext:
-        if i.isalpha() == True:
-            b = ord(i) + shift
-            if 65 <= ord(i) <= 90:
-                if b > 90:
-                    new_word.append(chr((b - 90) % 26 + ord("A") - 1))
+        if i.isalpha():
+            b = (
+                ord(i) + shift
+            )  # юникод-значение буквы суммированное с шифтом. Далле проверка, выходит ли эта сумма за рамки юникодов букв.
+            if ord("A") <= ord(i) <= ord("Z"):
+                if b > ord("Z"):
+                    ciphertext += chr((b - ord("Z")) % 26 + ord("A") - 1)
                 else:
-                    new_word.append(chr(ord(i) + shift))
-            if 97 <= ord(i) <= 122:
-                if b > 122:
-                    new_word.append(chr((b - 122) % 26 + ord("a") - 1))
+                    ciphertext += chr(ord(i) + shift)
+            if ord("a") <= ord(i) <= ord("z"):
+                if b > ord("z"):
+                    ciphertext += chr((b - ord("z")) % 26 + ord("a") - 1)
                 else:
-                    new_word.append(chr(ord(i) + shift))
+                    ciphertext += chr(ord(i) + shift)
         else:
-            new_word.append(i)
-    return "".join(map(str, new_word))
+            ciphertext += i
+    return ciphertext
 
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
@@ -47,24 +49,24 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     >>> decrypt_caesar("")
     ''
     """
-    plaintext: list = []
-    new_word = []
+
+    plaintext = ""
     for i in ciphertext:
-        if i.isalpha() == True:
+        if i.isalpha():
             b = ord(i) - shift
-            if 65 <= ord(i) <= 90:
-                if b < 65:
-                    new_word.append(chr(ord("Z") + 1 - (65 - b) % 26))
+            if ord("A") <= ord(i) <= ord("Z"):
+                if b < ord("A"):
+                    plaintext += chr(ord("Z") + 1 - (ord("A") - b) % 26)
                 else:
-                    new_word.append(chr(ord(i) - shift))
-            if 97 <= ord(i) <= 122:
-                if b < 97:
-                    new_word.append(chr(ord("z") + 1 - (97 - b) % 26))
+                    plaintext += chr(ord(i) - shift)
+            if ord("a") <= ord(i) <= ord("z"):
+                if b < ord("a"):
+                    plaintext += chr(ord("z") + 1 - (ord("a") - b) % 26)
                 else:
-                    new_word.append(chr(ord(i) - shift))
+                    plaintext += chr(ord(i) - shift)
         else:
-            new_word.append(i)
-    return "".join(map(str, new_word))
+            plaintext += i
+    return plaintext
 
 
 def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
