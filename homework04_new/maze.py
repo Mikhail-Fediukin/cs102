@@ -1,5 +1,7 @@
 from copy import deepcopy
 from random import choice, randint
+
+ignore_missing_imports = True
 from typing import List, Optional, Tuple, Union
 
 import pandas as pd
@@ -78,12 +80,13 @@ def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
     :return:
     """
     exit_here = []
-    for x in range(len(grid)):
-        for y in range(len(grid[0])):
-            if grid[x][y] == "X":
-                exit_here.append((x, y))
-        if len(exit_here) == 2:
-            break
+    for x, row in enumerate(grid):
+        if "X" in row:
+            for y, _ in enumerate(row):
+                if grid[x][y] == "X":
+                    exit_here.append((x, y))
+            if len(exit_here) == 2:
+                break
     return exit_here
 
 
@@ -94,8 +97,8 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
     :param k:
     :return:
     """
-    for x in range(len(grid)):
-        for y in range(len(grid[x])):
+    for x, row in enumerate(grid):
+        for y, _ in enumerate(row):
             if grid[x][y] == k:
                 if x - 1 >= 0 and grid[x - 1][y] == 0:
                     grid[x - 1][y] = k + 1
@@ -187,8 +190,8 @@ def solve_maze(
 
     grid[in_[0]][in_[1]], grid[out[0]][out[1]] = 1, 0
 
-    for x in range(len(grid)):
-        for y in range(len(grid[x])):
+    for x, row in enumerate(grid):
+        for y, _ in enumerate(row):
             if grid[x][y] == " ":
                 grid[x][y] = 0
     k = 0
@@ -211,6 +214,10 @@ def add_path_to_grid(
     """
 
     if path:
+        for x, row in enumerate(grid):
+            for y, _ in enumerate(row):
+                if grid[x][y] != "■":
+                    grid[x][y] = " "
         for i, row in enumerate(grid):
             for j, _ in enumerate(row):
                 if (i, j) in path:
