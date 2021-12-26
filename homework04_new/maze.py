@@ -1,9 +1,6 @@
 from copy import deepcopy
 from random import choice, randint
-
-ignore_missing_imports = True
 from typing import List, Optional, Tuple, Union
-
 import pandas as pd
 
 
@@ -225,9 +222,9 @@ def add_path_to_grid(
 
 
 if __name__ == "__main__":
-    print(pd.DataFrame(bin_tree_maze(15, 15)))
+    print(pd.DataFrame(bin_tree_maze(5, 5)))
     GRID = bin_tree_maze(15, 15)
     print(pd.DataFrame(GRID))
-    _, PATH = solve_maze(GRID)
-    MAZE = add_path_to_grid(GRID, PATH)
+    MAZE, PATH = solve_maze(GRID)
+    MAZE = add_path_to_grid(MAZE, PATH)
     print(pd.DataFrame(MAZE))
