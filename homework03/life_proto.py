@@ -17,28 +17,19 @@ class GameOfLife:
         self.width = width
         self.height = height
         self.cell_size = cell_size
-
-        # Устанавливаем размер окна
         self.screen_size = width, height
-        # Создание нового окна
         self.screen = pygame.display.set_mode(self.screen_size)
-
-        # Вычисляем количество ячеек по вертикали и горизонтали
         self.cell_width = self.width // self.cell_size
         self.cell_height = self.height // self.cell_size
-
-        # Скорость протекания игры
         self.speed = speed
 
     def draw_lines(self) -> None:
-        """ Отрисовать сетку """
         for x in range(0, self.width, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
         for y in range(0, self.height, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
 
     def run(self) -> None:
-        """ Запустить игру """
         pygame.init()
         clock = pygame.time.Clock()
         pygame.display.set_caption("Game of Life")
