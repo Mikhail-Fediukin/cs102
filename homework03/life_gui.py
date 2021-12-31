@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 import pygame
+
 from life import GameOfLife
 from ui import UI
 
@@ -10,8 +11,8 @@ class GUI(UI):
         super().__init__(life)
 
         self.cell_size = cell_size
-        self.width = cell_size*self.life.cols
-        self.height = cell_size*self.life.rows
+        self.width = cell_size * self.life.cols
+        self.height = cell_size * self.life.rows
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.speed = speed
         self.paused = False
@@ -30,7 +31,9 @@ class GUI(UI):
                 else:
                     color = "green"
                 pygame.draw.rect(
-                    self.screen, pygame.Color(color), [x*self.cell_size, y*self.cell_size, self.cell_size, self.cell_size]
+                    self.screen,
+                    pygame.Color(color),
+                    [x * self.cell_size, y * self.cell_size, self.cell_size, self.cell_size],
                 )
 
     def run(self) -> None:

@@ -54,7 +54,7 @@ class GameOfLife:
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
             return [
-                [random.choice([1, 0]) for i in range(self.cell_width)]
+                [random.choice([0, 1]) for i in range(self.cell_width)]
                 for j in range(self.cell_height)
             ]
         else:
@@ -73,8 +73,8 @@ class GameOfLife:
 
     def get_neighbours(self, cell: Cell) -> Cells:
         cells = []
-        x = cell[0] // self.cell_size
-        y = cell[1] // self.cell_size
+        x = cell[1] // self.cell_size
+        y = cell[0] // self.cell_size
         if y - 1 >= 0:
             cells.append(self.grid[y - 1][x])
         if y + 1 < self.cell_height:
@@ -88,7 +88,7 @@ class GameOfLife:
         if x + 1 < self.cell_width:
             if y - 1 >= 0:
                 cells.append(self.grid[y - 1][x + 1])
-            cells.append(self.grid[y - 1][x + 1])
+            cells.append(self.grid[y][x + 1])
             if y + 1 < self.cell_height:
                 cells.append(self.grid[y + 1][x + 1])
         return cells
@@ -98,9 +98,9 @@ class GameOfLife:
         for y in range(0, self.height, self.cell_size):
             row = []
             for x in range(0, self.width, self.cell_size):
-                if sum(self.get_neighbours((x, y))) == 3 or (
+                if sum(self.get_neighbours((y, x))) == 3 or (
                     self.grid[y // self.cell_size][x // self.cell_size] == 1
-                    and sum(self.get_neighbours((x, y))) == 2
+                    and sum(self.get_neighbours((y, x))) == 2
                 ):
                     row.append(1)
                 else:
@@ -108,3 +108,8 @@ class GameOfLife:
             updated_grid.append(row)
         self.grid = updated_grid
         return self.grid
+
+
+if __name__ == "__main__":
+    game = GameOfLife()
+    game.run()

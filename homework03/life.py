@@ -26,7 +26,7 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
-            return [[random.choice([1, 0]) for i in range(self.cols)] for j in range(self.rows)]
+            return [[random.choice([0, 1]) for i in range(self.cols)] for j in range(self.rows)]
         else:
             return [[0 for i in range(self.cols)] for j in range(self.rows)]
 
@@ -47,7 +47,7 @@ class GameOfLife:
         if x + 1 < self.cols:
             if y - 1 >= 0:
                 cells.append(self.curr_generation[y - 1][x + 1])
-            cells.append(self.curr_generation[y - 1][x + 1])
+            cells.append(self.curr_generation[y][x + 1])
             if y + 1 < self.rows:
                 cells.append(self.curr_generation[y + 1][x + 1])
         return cells
