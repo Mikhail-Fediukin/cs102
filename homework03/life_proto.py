@@ -1,13 +1,12 @@
 import random
 import typing as tp
-import typing
 
 import pygame
 from pygame.locals import *
 
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
-Grid: typing.Type[list[list[int]]] = tp.List[Cells]
+Grid: tp.Type[list[list[int]]] = tp.List[Cells]
 
 
 class GameOfLife:
