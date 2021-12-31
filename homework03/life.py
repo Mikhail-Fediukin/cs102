@@ -1,10 +1,6 @@
 import pathlib
 import random
 import typing as tp
-from pprint import pp
-
-import pygame
-from pygame.locals import *
 
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
@@ -26,9 +22,9 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
-            return [[random.choice([0, 1]) for i in range(self.cols)] for j in range(self.rows)]
+            return [[random.choice([0, 1]) in range(self.cols)] for j in range(self.rows)]
         else:
-            return [[0 for i in range(self.cols)] for j in range(self.rows)]
+            return [[0 in range(self.cols)] for j in range(self.rows)]
 
     def get_neighbours(self, cell: Cell) -> Cells:
         cells = []
