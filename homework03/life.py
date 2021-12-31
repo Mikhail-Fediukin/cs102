@@ -83,8 +83,9 @@ class GameOfLife:
     def from_file(filename: pathlib.Path) -> "GameOfLife":
         file = open(filename, "r")
         file_grid = file.read().split()
+        new_grid = []
         for i, row in enumerate(file_grid):
-            file_grid[i] = list(map(int, list(row)))
+            new_grid.append(list(map(int, list(row))))
         grid = GameOfLife((len(file_grid), len(file_grid[0])))
         grid.curr_generation = file_grid
         return grid
