@@ -2,7 +2,6 @@ import random
 import typing as tp
 
 import pygame
-from pygame.locals import *
 
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
@@ -33,7 +32,7 @@ class GameOfLife:
         running = True
         while running:
             for event in pygame.event.get():
-                if event.type == QUIT:
+                if event.type == pygame.QUIT:
                     running = False
 
             self.draw_grid()

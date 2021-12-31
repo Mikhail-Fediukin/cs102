@@ -87,7 +87,7 @@ class GameOfLife:
         for i, row in enumerate(file_grid):
             new_grid.append(list(map(int, list(row))))
         grid = GameOfLife((len(file_grid), len(file_grid[0])))
-        grid.curr_generation = file_grid
+        grid.curr_generation = new_grid
         return grid
 
     def save(self, filename: pathlib.Path) -> None:
