@@ -15,7 +15,7 @@ class GameOfLife:
         max_generations: tp.Optional[float] = float("inf"),
     ) -> None:
         self.rows, self.cols = size
-        self.prev_generation = [[]]
+        self.prev_generation = [[0]]
         self.curr_generation = self.create_grid(randomize=randomize)
         self.max_generations = max_generations
         self.generations = 1
