@@ -5,7 +5,7 @@ import pygame
 
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
-Grid: tp.Type[list[list[int]]] = tp.List[Cells]
+Grid = tp.List[Cells]
 
 
 class GameOfLife:
@@ -49,7 +49,7 @@ class GameOfLife:
         for y in range(0, self.height, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
 
-    def create_grid(self, randomize: bool = False) -> list[list[int]]:
+    def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
             return [
                 [random.choice([0, 1]) for i in range(self.cell_width)]
@@ -91,7 +91,7 @@ class GameOfLife:
                 cells.append(self.grid[y + 1][x + 1])
         return cells
 
-    def get_next_generation(self) -> list[list[int]]:
+    def get_next_generation(self) -> Grid:
         updated_grid = []
         for y in range(0, self.height, self.cell_size):
             row = []

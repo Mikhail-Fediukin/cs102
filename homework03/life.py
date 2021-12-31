@@ -2,6 +2,7 @@ import pathlib
 import random
 import typing as tp
 
+
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
 Grid = tp.List[Cells]
@@ -15,16 +16,16 @@ class GameOfLife:
         max_generations: tp.Optional[float] = float("inf"),
     ) -> None:
         self.rows, self.cols = size
-        self.prev_generation = self.create_grid()
+        self.prev_generation = [[]]
         self.curr_generation = self.create_grid(randomize=randomize)
         self.max_generations = max_generations
         self.generations = 1
 
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
-            return [[random.choice([0, 1]) in range(self.cols)] for j in range(self.rows)]
+            return [[random.choice([0, 1]) for i in range(self.cols)] for j in range(self.rows)]
         else:
-            return [[0 in range(self.cols)] for j in range(self.rows)]
+            return [[0 for i in range(self.cols)] for j in range(self.rows)]
 
     def get_neighbours(self, cell: Cell) -> Cells:
         cells = []
