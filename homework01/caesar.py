@@ -18,17 +18,15 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ciphertext = ""
     for i in plaintext:
         if i.isalpha():
-            b = (
-                ord(i) + shift
-            )  # юникод-значение буквы суммированное с шифтом. Далле проверка, выходит ли эта сумма за рамки юникодов букв.
+            new_i = ord(i) + shift
             if ord("A") <= ord(i) <= ord("Z"):
-                if b > ord("Z"):
-                    ciphertext += chr((b - ord("Z")) % 26 + ord("A") - 1)
+                if new_i > ord("Z"):
+                    ciphertext += chr((new_i - ord("Z")) % 26 + ord("A") - 1)
                 else:
                     ciphertext += chr(ord(i) + shift)
             if ord("a") <= ord(i) <= ord("z"):
-                if b > ord("z"):
-                    ciphertext += chr((b - ord("z")) % 26 + ord("a") - 1)
+                if new_i > ord("z"):
+                    ciphertext += chr((new_i - ord("z")) % 26 + ord("a") - 1)
                 else:
                     ciphertext += chr(ord(i) + shift)
         else:
@@ -53,15 +51,15 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     plaintext = ""
     for i in ciphertext:
         if i.isalpha():
-            b = ord(i) - shift
+            new_i = ord(i) - shift
             if ord("A") <= ord(i) <= ord("Z"):
-                if b < ord("A"):
-                    plaintext += chr(ord("Z") + 1 - (ord("A") - b) % 26)
+                if new_i < ord("A"):
+                    plaintext += chr(ord("Z") + 1 - (ord("A") - new_i) % 26)
                 else:
                     plaintext += chr(ord(i) - shift)
             if ord("a") <= ord(i) <= ord("z"):
-                if b < ord("a"):
-                    plaintext += chr(ord("z") + 1 - (ord("a") - b) % 26)
+                if new_i < ord("a"):
+                    plaintext += chr(ord("z") + 1 - (ord("a") - new_i) % 26)
                 else:
                     plaintext += chr(ord(i) - shift)
         else:
