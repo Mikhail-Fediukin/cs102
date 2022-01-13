@@ -88,7 +88,7 @@ def shortest_path(
 
     path = []
     x, y = exit_coord
-    k = grid[x][y] + 1
+    k = int(grid[x][y]) + 1
     while k != 1:
         path.append((x, y))
         k -= 1
