@@ -13,8 +13,15 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    # PUT YOUR CODE HERE
-    pass
+    i = 2
+    if n == 2:
+        return True
+    if n < 2:
+        return False
+    while n % i != 0 and i <= n:
+        i += 1
+        return True
+    return False
 
 
 def gcd(a: int, b: int) -> int:
@@ -26,8 +33,17 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    # PUT YOUR CODE HERE
-    pass
+    if a == 0 and b == 0:
+        return 0
+    elif a == 0 and b != 0:
+        return b
+    elif b == 0 and a != 0:
+        return a
+    else:
+        while a % b != 0:
+            c = int(a % b)
+            a, b = b, c
+        return b
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
@@ -38,8 +54,18 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
-    pass
+    x, y = [0], [1]
+    ee = phi  # сохраняю первоначальное значение phi, т.к. оно в дальнейшем будет меняться
+    a = []
+    while e != 0:
+        a.append(phi // e)
+        phi, e = e, phi % e
+    a.reverse()
+    a.remove(a[0])
+    for i in range(len(a)):
+        x.append(y[i])
+        y.append(x[i] - y[i] * a[i])
+    return y[len(a)] % ee
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
@@ -47,46 +73,26 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
         raise ValueError("Both numbers must be prime.")
     elif p == q:
         raise ValueError("p and q cannot be equal")
-
-    # n = pq
-    # PUT YOUR CODE HERE
-
-    # phi = (p-1)(q-1)
-    # PUT YOUR CODE HERE
-
-    # Choose an integer e such that e and phi(n) are coprime
+    n = p * q
+    phi = (p - 1) * (q - 1)
     e = random.randrange(1, phi)
-
-    # Use Euclid's Algorithm to verify that e and phi(n) are coprime
     g = gcd(e, phi)
     while g != 1:
         e = random.randrange(1, phi)
         g = gcd(e, phi)
-
-    # Use Extended Euclid's Algorithm to generate the private key
     d = multiplicative_inverse(e, phi)
-
-    # Return public and private keypair
-    # Public key is (e, n) and private key is (d, n)
-    return ((e, n), (d, n))
+    return (e, n), (d, n)
 
 
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
-    # Unpack the key into it's components
     key, n = pk
-    # Convert each letter in the plaintext to numbers based on
-    # the character using a^b mod m
     cipher = [(ord(char) ** key) % n for char in plaintext]
-    # Return the array of bytes
     return cipher
 
 
 def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
-    # Unpack the key into its components
     key, n = pk
-    # Generate the plaintext based on the ciphertext and key using a^b mod m
     plain = [chr((char ** key) % n) for char in ciphertext]
-    # Return the array of bytes as a string
     return "".join(plain)
 
 
